@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Organizer Ubezpieczeń</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Osobisty Organizer Ubezpieczeń</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" th:href="@{/insurances}">Wykaz Ubezpieczeń</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Składka zarobiona</a>
+        </li>
+<!--        <li class="nav-item">-->
+<!--            <a class="nav-link disabled" href="#">Disabled</a>-->
+<!--        </li>-->
+    </ul>
+</nav>
+
+    <div class = "container">
+        <div class = "row">
+            <h1> Wykaz Ubezpieczeń</h1>
+        </div>
+
+        <div class = "row">
+            <div class = "col-lg-5">
+                <a th:href = "@{/insurances/new}" class = "btn btn-success btn-lg mb-5"> Dodaj polisę</a>
+            </div>
+
+        </div>
+
+        <table class = "table table-striped table-light table-bordered">
+            <thead class = "table-sub-heading-color">
+                <tr>
+                    <th> Nazwa Klienta </th>
+                    <th> Rodzaj ubezpieczenia</th>
+                    <th> Suma Ubezpieczenia </th>
+                    <th> Składka w PLN</th>
+                    <th> Składka zaksięgowana </th>
+                    <th> Zarządzaj </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr th:each = "insurance: ${insurances}">
+                    <td th:text = "${insurance.clientName}"></td>
+                    <td th:text = "${insurance.insuranceName}"></td>
+                    <td th:text = "${insurance.sumInsurance}"></td>
+                    <td th:text = "${insurance.premium}"></td>
+                    <td th:text = "${insurance.premiumPaid ? 'TAK' : 'NIE'}"></td>
+                    <td>
+                        <a th:href = "@{/insurances/edit/{id}(id=${insurance.id})}"
+                        class = "btn btn-primary">Zmień</a>
+
+                        <a th:href = "@{/insurances/{id}(id=${insurance.id})}"
+                           class = "btn btn-danger">Usuń</a>
+                    </td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</body>
+</html>
