@@ -22,7 +22,7 @@ public class InsuranceorganizerApplication implements CommandLineRunner {
 		Insurance insurance1 = new Insurance("ABC Trans", "OC Zawodowe", 250000, 1200.35, true);
 		insuranceRepository.save(insurance1);
 
-		Insurance insurance2 = new Insurance("OOL Trans", "OC Przewoźnika", 350000, 1900.35, false);
+		Insurance insurance2 = new Insurance("OOL Trans", "OC Przewoźnika Drogowego", 350000, 1900.35, false);
 		insuranceRepository.save(insurance2);
 
 		Insurance insurance3 = new Insurance("Siema Trans", "OC Spedytora", 900000, 5900.35, false);
