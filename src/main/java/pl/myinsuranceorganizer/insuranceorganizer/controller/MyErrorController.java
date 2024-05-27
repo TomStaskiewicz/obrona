@@ -1,33 +1,31 @@
 package pl.myinsuranceorganizer.insuranceorganizer.controller;
 
-import jakarta.servlet.RequestDispatcher;
-import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-
+import org.springframework.web.context.request.WebRequest;
 
 @Controller
-public class MyErrorController implements ErrorController, MyErrorControllerI {
+public class MyErrorController implements ErrorController {
 
-    @RequestMapping("/error")
-    public String handleError(HttpServletRequest request) {
-        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        if (status != null) {
-            int statusCode = Integer.parseInt(status.toString());
-            if (statusCode == HttpStatus.NOT_FOUND.value()) {
-                return "error-404"; // Custom view for 404 error
-            } else if (statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
-                return "error-500"; // Custom view for 500 error
-            }
-        }
-        return "error"; // Default error view
+    private final ErrorAttributes errorAttributes;
+
+    public MyErrorController(ErrorAttributes errorAttributes) {
+        this.errorAttributes = errorAttributes;
     }
 
-    @Override
+    @RequestMapping("/error")
+    public String handleError(WebRequest webRequest, Model model) {
+        // Pobierz szczegóły błędu
+        model.addAttribute("error", errorAttributes.getError(webRequest));
+        // Zwróć nazwę widoku dla strony błędu
+        return "error";
+    }
+
+
     public String getErrorPath() {
-        return "/error";
+        return "/error"; // Zwróć ścieżkę do obsługi błędu
     }
 }

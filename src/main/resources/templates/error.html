@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Error Page</title>
 </head>
 <body>
-
+<h1>Nie można usunąć opłaconej polisy</h1>
+<p th:text="${error.message}"></p>
 </body>
 </html>

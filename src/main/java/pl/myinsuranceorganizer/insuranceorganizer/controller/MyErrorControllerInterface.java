@@ -1,5 +1,5 @@
 package pl.myinsuranceorganizer.insuranceorganizer.controller;
 
-public interface MyErrorControllerI {
+public interface MyErrorControllerInterface {
     public String getErrorPath();
 }
