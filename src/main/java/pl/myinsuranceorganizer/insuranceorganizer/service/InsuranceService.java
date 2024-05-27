@@ -14,4 +14,6 @@ public interface InsuranceService {
     Insurance updateInsurance(Insurance insurance);
 
     void deleteInsuranceById(Long id);
+
+    public double getTotalEarnedPremium();
 }

@@ -44,4 +44,12 @@ public class InsuranceServiceImpl implements InsuranceService {
         insuranceRepository.deleteById(id);
 
     }
+    @Override
+    public double getTotalEarnedPremium() {
+        List<Insurance> insurances = insuranceRepository.findAll();
+        return insurances.stream()
+                .filter(Insurance::isPremiumPaid) // Upewnij się, że metoda isPremiumPaid istnieje
+                .mapToDouble(Insurance::getPremium)
+                .sum();
+    }
 }

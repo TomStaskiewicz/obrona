@@ -6,6 +6,28 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
+
+  <script>
+    function validateForm() {
+      var clientName = document.forms["insuranceForm"]["clientName"].value;
+      var insuranceName = document.forms["insuranceForm"]["insuranceName"].value;
+      var sumInsurance = document.forms["insuranceForm"]["sumInsurance"].value;
+      var premium = document.forms["insuranceForm"]["premium"].value;
+      var premiumPaid = document.forms["insuranceForm"]["premiumPaid"].value;
+
+      if (clientName == "" || insuranceName == "" || sumInsurance == "" || premium == "" || premiumPaid == "") {
+        alert("Wszystkie pola muszą być wypełnione!");
+        return false;
+      }
+      return true;
+    }
+
+    function setCustomValidityMessage(element, message) {
+      element.setCustomValidity(message);
+      element.reportValidity();
+    }
+  </script>
+
 </head>
 <body>
 <div class = "container">
@@ -23,21 +45,26 @@
                     th:field = "*{clientName}"
                     class = "form-control"
                     placeholder="Wpisz nazwę Klienta"
+                    required
+                    oninvalid="setCustomValidityMessage(this, 'Proszę wprowadzić nazwę klienta.')"
+                    oninput="setCustomValidityMessage(this, '')"
             />
 
           </div>
 
-<!--          <div class = "form-group">-->
-<!--            <label> Rodzaj Ubezpieczenia </label>-->
-<!--            <input-->
-<!--                    type = "text"-->
-<!--                    name = "insuranceName"-->
-<!--                    th:field = "*{insuranceName}"-->
-<!--                    class = "form-control"-->
-<!--                    placeholder="Rodzaj Ubezpieczenia"-->
-<!--            />-->
+          <div class = "form-group">
+            <label for="insuranceName">Rodzaj Ubezpieczenia</label>
+            <!-- Rozwijalna lista z identyfikatorem "exampleSelect" -->
+            <select name="insuranceName" th:field="*{insuranceName}" class="form-control" id="insuranceName">
+              <option value="">Wybierz</option>
+              <option value="OC Przewoźnika Drogowego">OC Przewoźnika Drogowego</option>
+              <option value="OC Spedytora">OC Spedytora</option>
+              <option value="OC Zawodowe">OC Zawodowe</option>
+              <option value="OC Komunikacyjne">OC Komunikacyjne</option>
+              <option value="Ubezpieczenie Turystyczne">Ubezpieczenie Turystyczne</option>
+            </select>
 
-<!--          </div>-->
+          </div>
 
           <div class = "form-group">
             <label> Suma Ubezpieczenia </label>
@@ -47,6 +74,9 @@
                     th:field = "*{sumInsurance}"
                     class = "form-control"
                     placeholder="Wprowadź Sumę Ubezpieczenia"
+                    required
+                    oninvalid="setCustomValidityMessage(this, 'Proszę wprowadzić sumę ubezpieczenia.')"
+                    oninput="setCustomValidityMessage(this, '')"
             />
           </div>
 
@@ -58,18 +88,21 @@
                     th:field = "*{premium}"
                     class = "form-control"
                     placeholder="Wprowadź wysokość składki"
+                    required
+                    oninvalid="setCustomValidityMessage(this, 'Proszę wprowadzić wysokość składki.')"
+                    oninput="setCustomValidityMessage(this, '')"
             />
           </div>
 
-          <div class = "form-group">
-            <label> Czy składka opłacona? </label>
-            <input
-                    type = "text"
-                    name = "premiumPaid"
-                    th:field = "*{premiumPaid}"
-                    class = "form-control"
-                    placeholder="Wprowadź TAK/NIE"
-            />
+          <div class="form-group">
+            <label>Czy składka opłacona?</label>
+            <select name="premiumPaid" th:field="*{premiumPaid}" class="form-control" id="premiumPaid" required
+                    oninvalid="setCustomValidityMessage(this, 'Proszę wybrać, czy składka została opłacona.')"
+                    oninput="setCustomValidityMessage(this, '')">
+              <option value="">Wybierz</option>
+              <option value="true">TAK</option>
+              <option value="false">NIE</option>
+            </select>
           </div>
 
           <div class = "box-footer">
@@ -88,6 +121,11 @@
   </div>
 
 </div>
+
+<!-- Skrypty JavaScript Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 </html>

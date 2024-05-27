@@ -85,4 +85,8 @@ public class Insurance {
     public void setPremiumPaid(Boolean premiumPaid) {
         this.premiumPaid = premiumPaid;
     }
+
+    public boolean isPremiumPaid() { // Getter dla pola premiumPaid
+        return premiumPaid != null && premiumPaid;
+    }
 }
