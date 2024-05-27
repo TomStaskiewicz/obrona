@@ -6,6 +6,8 @@ import pl.myinsuranceorganizer.insuranceorganizer.repository.InsuranceRepository
 import pl.myinsuranceorganizer.insuranceorganizer.service.InsuranceService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
 public class InsuranceServiceImpl implements InsuranceService {
@@ -41,8 +43,17 @@ public class InsuranceServiceImpl implements InsuranceService {
 
     @Override
     public void deleteInsuranceById(Long id) {
-        insuranceRepository.deleteById(id);
-
+        Optional<Insurance> optionalInsurance = insuranceRepository.findById(id);
+        if (optionalInsurance.isPresent()) {
+            Insurance insurance = optionalInsurance.get();
+            if (insurance.getPremiumPaid()) {
+                throw new IllegalStateException("Nie można usunąć ubezpieczenia, gdy składka została opłacona.");
+            } else {
+                insuranceRepository.deleteById(id);
+            }
+        } else {
+            throw new NoSuchElementException("Nie znaleziono ubezpieczenia o podanym identyfikatorze: " + id);
+        }
     }
     @Override
     public double getTotalEarnedPremium() {

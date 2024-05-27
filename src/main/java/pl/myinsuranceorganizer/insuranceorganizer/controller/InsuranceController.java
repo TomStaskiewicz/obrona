@@ -2,10 +2,8 @@ package pl.myinsuranceorganizer.insuranceorganizer.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import pl.myinsuranceorganizer.insuranceorganizer.entity.Insurance;
 import pl.myinsuranceorganizer.insuranceorganizer.service.InsuranceService;
 
@@ -71,6 +69,25 @@ public class InsuranceController {
         insuranceService.deleteInsuranceById(id);
         return "redirect:/insurances";
 
+    }
+    @ControllerAdvice
+    public class GlobalExceptionHandler {
+
+        @ExceptionHandler(IllegalStateException.class)
+        public ModelAndView handleIllegalStateException(IllegalStateException ex) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("errorMessage", "Nie można usunąć ubezpieczenia, gdy składka została opłacona.");
+            modelAndView.setViewName("error");
+            return modelAndView;
+        }
+
+        @ExceptionHandler(Exception.class)
+        public ModelAndView handleException(Exception ex) {
+            ModelAndView modelAndView = new ModelAndView();
+            modelAndView.addObject("errorMessage", "Wystąpił nieoczekiwany błąd. Proszę spróbować ponownie.");
+            modelAndView.setViewName("error");
+            return modelAndView;
+        }
     }
 
 
